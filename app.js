@@ -3,14 +3,18 @@
  
  const https = require("https");
  const app = express();
+
+
  app.use(bodyParser.urlencoded({extended: true}));
+  require('dotenv').config();
  app.get("/",function (req,res){
      res.sendFile(__dirname + "/index.html");
   });
 
   app.post("/",function (req,res){
    const city = req.body.city;
-   const url = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&appid=ff12519989eb3e804c502ba8891fc593&units=metric";
+
+   const url = "https://api.openweathermap.org/data/2.5/weather?q="+ city + "&appid="+ process.env.API_KEY +"&units=metric";
    https.get(url,function (response){
      
        console.log(response.statusCode);
